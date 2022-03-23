@@ -410,7 +410,7 @@ admin.site.register(School, SchoolAdmin)
 
 class RegistrationAdmin(ImportExportModelAdmin):
     resource_class = RegistrationResource
-    list_display = ('student', 'academic_year', 'rank', 'status', 'is_active', 'created_by')
+    list_display = ('student', 'academic_year', 'rank','combination', 'status', 'is_active', 'created_by')
     search_fields = ['student', ]
 
     list_filter = ['student']
