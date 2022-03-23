@@ -141,7 +141,7 @@ class StudentAdmin(ImportExportModelAdmin):
     resource_class = StudentResource
     list_display = (
         'admission', 'entry_number', 'entry_rank', 'first_name', 'middle_name', 'last_name', 'parent_phone', 'sex',
-        'entry_date', 'registerer')
+        'entry_date',)
     search_fields = ['entry_number', 'parent_phone']
     list_filter = ['sex']
 
