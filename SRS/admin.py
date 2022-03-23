@@ -275,7 +275,17 @@ class PaymentItemAdmin(ImportExportModelAdmin):
 
 
 admin.site.register(PaymentItem, PaymentItemAdmin)
-admin.site.register(Character)
+
+
+class CharacterAdmin(ImportExportModelAdmin):
+    # resource_class = UnitResource
+    list_display = ('code', 'name',)
+    search_fields = ['code', ]
+
+    list_filter = ['code', ]
+
+
+admin.site.register(Character, CharacterAdmin)
 
 
 class StudentCharacterAdmin(ImportExportModelAdmin):
