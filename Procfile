@@ -1,1 +1,1 @@
-web: gunicorn mkuu.wsgi
+web: gunicorn mkuu.wsgi --log-file -
