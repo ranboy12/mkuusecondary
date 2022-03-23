@@ -34,7 +34,7 @@ class Student(models.Model):
     entry_rank = models.ForeignKey('Rank', on_delete=models.CASCADE, null=True)
     entry_date = models.DateTimeField(auto_now_add=True)
     school = models.ForeignKey('School', on_delete=models.CASCADE, null=True, blank=True)
-    registerer = models.ForeignKey(User, on_delete=models.CASCADE, editable=False,null=True)
+    # registerer = models.ForeignKey(User, on_delete=models.CASCADE, editable=False,null=True)
 
     def save(self, *args, **kwargs):
         if len(self.entry_number) < 4:
