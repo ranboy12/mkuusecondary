@@ -1,0 +1,229 @@
+{% load static %}
+<html>
+ <head>
+   <title>MSS-Results</title>
+
+   <style>
+
+    @page {
+        size: Letter;
+        margin: 0.2in 0.44in 0.5in 0.44in;
+        background-color: url("{% static 'img/MKUU.png' %}");
+
+        @bottom-right{
+        	content: "Page " counter(page) " of " counter(pages);
+        	margin: 0in 0in 1in 0in;
+    	}
+
+    	@bottom-left{
+        	content: "www.mkuusecondary.ac.tz";
+        	margin: 0in 0in 1in 0in;
+    	}
+
+  }
+  h1 {
+    text-align: center;
+  }
+  .table1 {
+    width: %;
+  }
+  .table1 {
+    border: 1px solid black;
+    margin: 0 auto;
+    width: 100%;
+	}
+  .table {
+    border-collapse: collapse;
+  }
+
+	.table1 th, td {
+    text-align: center;
+    border: 1px solid;
+	}
+
+	img {
+		width: 100%;
+	}
+  .small {
+    font-size: 10px;
+  }
+  .mediam {
+    font-size: 12px;
+
+  }
+  .width10 {
+    width: 7%;
+  }
+  .width40 {
+    width: 18%;
+    font-size: 9px;
+  }
+   .width5 {
+    width: 2%;
+  }
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  .table-bordered {
+    border: 1px solid #dee2e6;
+  }
+  .table tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+  text-align: center;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table-sm th,
+.table-sm td {
+  padding: 0.3rem;
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+  footer{
+    position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+  }
+
+   </style>
+ </head>
+ <body>
+
+    <!--<img src="{% static 'img/logos.png' %}" alt="mama">-->
+
+    <center>
+         <h3> <u>  OR- TAMISEMI</u></h3>
+         <h4> <u>  MKUU SECONDARY SCHOOL</u></h4>
+    <h5> <u>  {{event.event.name|upper}} RESULTS {{event.year}}</u></h5>
+    <h5> {{rank|upper}}-{{combination.name|upper}} </h5>
+        </center>
+    <table class="table1">
+      <thead>
+        <tr>
+          <th colspan="6">RESULT SUMMARY</th>
+        </tr>
+
+        <tr>
+          <th rowspan="3">DIVISION</th>
+        </tr>
+
+        <tr>
+          <th>I</th>
+          <th>II</th>
+          <th>III</th>
+          <th>IV</th>
+          <th>O</th>
+<!--          <th class="small">REG</th>-->
+<!--          <th class="small">SAT</th>-->
+<!--          <th class="small">ABS</th>-->
+<!--          <th class="small">GPA</th>-->
+<!--          <th class="small">%PASS</th>-->
+<!--          <th class="small">%FAIL</th>-->
+        </tr>
+        <tr>
+             <td>
+            {% for i in total %}
+            {% if i.division == "1" %}
+           {{i.total}}
+            {% endif %}
+                {% endfor %}
+                 </td>
+            <td>
+{% for i in total %}
+            {% if i.division == "2" %}
+            {{i.total}}
+            {% endif %}
+            {% endfor %} </td>
+
+            <td>{% for i in total %}
+            {% if i.division == "3" %}
+            {{i.total}}
+            {% endif %}
+            {% endfor %}</td>
+
+           <td> {% for i in total %}
+            {% if i.division == "4" %}
+            {{i.total}}
+
+            {% endif %}
+            {% endfor %} </td>
+
+           <td>  {% for i in total %}
+            {% if i.division == "Zero" %}
+           {{i.total}}
+
+            {% endif %}
+            {% endfor %}</td>
+
+
+<!--          <td>260</td>-->
+<!--          <td>254</td>-->
+<!--          <td>6</td>-->
+<!--          <td>4.00082</td>-->
+<!--          <td>80.7</td>-->
+<!--          <td>19.3</td>-->
+        </tr>
+      </thead>
+   </table>
+   <br>
+   <table class="table table-sm table-bordered table-striped">
+      <thead style="background:black; color: white; border:1px solid white;">
+<!--        <th class="mediam width10" style="border:1px solid white;">INDEX NUMBER</th>-->
+<!--        <th class="mediam width40" style="border:1px solid white;">CANDIDATE'S FULL NAME</th>-->
+<!--        <th class="mediam width5" style="border:1px solid white;">SEX</th>-->
+<!--        <th class="mediam width5" style="border:1px solid white;">AGGT</th>-->
+<!--        <th class="mediam width5" style="border:1px solid white;">DIV</th>-->
+<!--        <th class="mediam width" style="border:1px solid white;">DETAIL SUBJECT</th>-->
+      <th class="small width5">Position</th>
+
+      <th class="small width40">Full Names</th>
+									{% for i in subject %}
+
+													<th class="small">{{i.subject__subject__code}}</th>
+									{% endfor %}
+										<th class="small width5 ">Division</th>
+										<th class="small width5 ">weight</th>
+      </thead>
+     <tbody>
+       {% for  i in get_student %}
+
+
+         <tr>
+           <td class="small width5">{{ forloop.counter }}</td>
+           <td class="small width40">{{ i.registration.student.first_name}} &nbsp; {{ i.registration.student.middle_name|make_list|first}} &nbsp; {{ i.registration.student.last_name}}</td>
+{%      for x in result %}
+                  {%  if i.registration == x.registration  %}
+           <td class="small">{{ x.marks}} - <b>{{x.grade}}</b></td>
+           {% endif %}
+           {% endfor %}
+            <td class="small width5">{{ i.division}} .<b> {{i.point}}</b> </td>
+              <td class="small width5">{{i.weight}} </td>
+         </tr>
+       {% endfor %}
+     </tbody>
+   </table>
+   <footer>
+     <hr>
+   </footer>
+ </body>
+</html>
