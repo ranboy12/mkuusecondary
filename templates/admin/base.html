@@ -594,6 +594,7 @@
                     {% endif %}
                 </li>
                 {% endif %}
+
                 {% if request.user|has_group:"Coordinator" or request.user.title|upper == "TEACHER" %}
                 {% if request.user.is_staff %}
 

@@ -10,6 +10,7 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import *
 
 # from .resources import AcademicRegistrationResource
+from .resources import *
 
 User = get_user_model()
 
@@ -137,18 +138,19 @@ admin.site.register(YearResult, YearResultAdmin)
 
 
 class StudentAdmin(ImportExportModelAdmin):
-    # resource_class = LocationResource
+    resource_class = StudentResource
     list_display = (
         'admission', 'entry_number', 'entry_rank', 'first_name', 'middle_name', 'last_name', 'parent_phone', 'sex',
         'entry_date', 'registerer')
     search_fields = ['entry_number', 'parent_phone']
     list_filter = ['sex']
 
+
     # autocomplete_fields = ['district']
 
-    def save_model(self, request, obj, form, change):
-        obj.registerer = request.user
-        obj.save()
+    # def save_model(self, request, obj, form, change):
+    #     obj.registerer = request.user
+    #     obj.save()
 
 
 admin.site.register(Student, StudentAdmin)
