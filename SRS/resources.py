@@ -32,6 +32,13 @@ class StudentResource(resources.ModelResource):
 
 
 class RegistrationResource(resources.ModelResource):
+    student = fields.Field(
+        column_name='student',
+        attribute='student',
+        widget=ForeignKeyWidget(Student, 'admission')
+
+    )
+
     rank = fields.Field(
         column_name='rank',
         attribute='rank',
