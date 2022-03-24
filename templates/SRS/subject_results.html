@@ -155,7 +155,7 @@
 								      <div class="modal-body">
 										  <form action="{% url 'SRS:subject_result_upload' subject combination rank %}" method="POST" enctype="multipart/form-data">
 												{% csrf_token %}
-												<small class="text-danger"><b>Only accepts .CSV files</b></small>
+												<small class="text-danger"><b>Only accepts .xlsx files</b></small>
 												<div class="form-group">
 													<div class="pt-3">
 														<label for="file1"> Upload {{subject}} file</label>
