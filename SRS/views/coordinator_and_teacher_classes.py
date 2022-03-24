@@ -31,11 +31,15 @@ def subject_results_list(request, rank, subject_name):
 
     get_event = AcademicEvent.objects.get(rank=get_rank, is_active=True)
     get_results = Result.objects.filter(subject__subject=get_subject, registration__rank=get_rank, event=get_event)
+    get_total = Result.objects.filter(subject__subject=get_subject, registration__rank=get_rank, event=get_event,
+                                      marks=None).count()
+    # get_total_un_uploaded =Result.objects.filter(subject__subject=get_subject, registration__rank=get_rank, event=get_event)
 
     context = {
         'result': get_results,
         'subject': get_subject,
         'rank': get_rank,
+        'total': get_total,
 
         'event': get_event,
 

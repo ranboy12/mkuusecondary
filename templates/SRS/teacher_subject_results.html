@@ -51,7 +51,7 @@
 
 	    <div class="col-12">
 			<div>
-
+{% if result %}
 <strong class="text-danger">*You're required to download student template result first before uploading result <hr></strong>
 <a  href="{% url 'SRS:subject_teacher' %}" class="btn mu-bg-oranges" ><i class="fa fa-arrow-left"></i> Back</a>
 
@@ -60,6 +60,7 @@
                 </a>
 	<a class="btn mu-bg-oranges pb-2" href=""  data-toggle="modal" data-target="#deletesubject" > <i class="fa fa-trash" aria-hidden="true"></i> Delete Subject Result
                 </a>
+				{% endif %}
 				<a class="btn btn-primary pb-2" href="{% url 'SRS:register_exam'  rank subject %}"  >  Register an Exam <i class="fa fa-book" aria-hidden="true"></i>
                 </a>
 
@@ -103,17 +104,17 @@
 
 
 					<div style="display: flex; justify-content: space-between">
-
+{% if result %}
 						<div>
 
 
-							<a class="btn mu-bg mu-color pb-2" href="{% url 'SRS:download_csv_data' subject rank %}"  > <i class="fa fa-download" aria-hidden="true"></i> student Template
+							<a class="btn mu-bg mu-color pb-2" href="{% url 'SRS:download_csv_data' subject rank %}"  > <i class="fa fa-download" aria-hidden="true"></i> student Template (<b>{{total}}</b>)
                 </a>
 
 
 
 					</div>
-
+{% endif %}
 					<div>
 						<h4 class="text-muted"> <i class="fas fa-book-open fa-sm fa-fw mr-2" ></i>
 							Subject:<b>{{subject}}</b></h4></div>
@@ -125,7 +126,7 @@
 
 <div><h4 class="text-muted"> <i class="fa fa-calendar fa-sm fa-fw mr-2" ></i> Event: <b >{{event.event.name}}-{{event.year.year}} </b></h4>
 </div>
-
+{% if result %}
 					<div>
 							<a class="btn mu-bg mu-color pb-2" href="#"  data-toggle="modal" data-target="#newTask"> <i class="fa fa-upload" aria-hidden="true"></i> Upload result
                 </a>
@@ -163,7 +164,7 @@
 								  </div>
 								</div>
 					</div>
-
+{% endif %}
 					</div>
 
 
@@ -186,12 +187,21 @@
 <tr>
 													{% for z in result %}
 													<td class="text-justify">{{z.registration.student.admission}}</td>
-													<td class="text-justify">{{z.marks}} </td>
+	{% if z.marks %}
+				<td class="text-justify">{{z.marks}} </td>
+
 													<td class="text-justify">{{z.grade}} </td>
 													<td class="text-justify">{{z.point}} </td>
 													<td class="text-justify">{{z.remark}}</td>
 													<td class="text-justify">{{z.date}}</td>
+	{% else %}
+			<td class="text-justify">-</td>
+	<td class="text-justify">-</td>
+													<td class="text-justify">-</td>
+													<td class="text-justify">{{z.remark}}</td>
+													<td class="text-justify">-</td>
 
+{% endif %}
 
 
 
