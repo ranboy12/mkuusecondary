@@ -45,62 +45,66 @@ def subject_result_upload(request, get__subject, rank):
                 student__admission=worksheet.cell(row=rowno, column=2).value).first()
             check_combination = CombinationSubject.objects.get(subject=check_subject,
                                                                combination=registration_number.combination)
-            created = Result.objects.update_or_create(
-                registration=registration_number,
-                event=get_event,
-                subject=check_combination,
-                marks=int(worksheet.cell(row=rowno, column=7).value)
+            with transaction.atomic():
+                card = Result.objects.select_for_update().filter(registration=registration_number,
+                                                                  event=get_event,
+                                                                  subject=check_combination,
+                                                                  )
+                if card:
+                    for created in card:
+                        created.marks=int(worksheet.cell(row=rowno, column=7).value)
+                        created.save()
 
-            )
-            if created:
-                x = 7
-                y = 3
+                        created.save()
+                        if created:
+                            x = 7
+                            y = 3
 
-                get_total_subject = Result.objects.filter(registration=registration_number, event=get_event).count()
-                get_subjects = registration_number.combination.subject
-                if get_total_subject == get_subjects and get_subjects >= 7:
+                            get_total_subject = Result.objects.filter(registration=registration_number, event=get_event).count()
+                            get_subjects = registration_number.combination.subject
+                            if get_total_subject == get_subjects and get_subjects >= 7:
 
-                    with transaction.atomic():
-                        cards = Result.objects.select_for_update().filter(registration=registration_number,
-                                                                          event=get_event
-                                                                          ).order_by('-marks')[:x]
-                        if cards:
-                            total = 0
-                            # total_weight = 0
+                                with transaction.atomic():
+                                    cards = Result.objects.select_for_update().filter(registration=registration_number,
+                                                                                      event=get_event, marks__gte=0
+                                                                                      ).order_by('-marks')[:x]
+                                    if cards:
+                                        total = 0
+                                        # total_weight = 0
 
-                            for mark in cards:
-                                total = total + mark.point
-                                # total_weight = total_weight + mark.marks
+                                        for mark in cards:
+                                            total = total + mark.point
+                                            # total_weight = total_weight + mark.marks
 
-                            save_data = YearResult(
-                                registration=registration_number,
-                                event=get_event,
-                                point=total
-                                # weight = total_weight
-                            )
-                            save_data.save()
-                elif get_total_subject == get_subjects and get_subjects <= 5:
+                                        save_data = YearResult(
+                                            registration=registration_number,
+                                            event=get_event,
+                                            point=total
+                                            # weight = total_weight
+                                        )
+                                        save_data.save()
+                            elif get_total_subject == get_subjects and get_subjects <= 5:
 
-                    with transaction.atomic():
-                        cards = Result.objects.select_for_update().filter(registration=registration_number,
-                                                                          event=get_event,
-                                                                          subject__subject__is_core=True
-                                                                          ).order_by('-marks')[:y]
-                        if cards:
-                            total = 0
-                            # total_weight = 0
+                                with transaction.atomic():
+                                    cards = Result.objects.select_for_update().filter(registration=registration_number,
+                                                                                      event=get_event, marks__gte=0,
+                                                                                      subject__subject__is_core=True
+                                                                                      ).order_by('-marks')[:y]
+                                    if cards:
+                                        total = 0
+                                        # total_weight = 0
 
-                            for mark in cards:
-                                total = total + mark.point
-                                # total_weight = total_weight + mark.marks
+                                        for mark in cards:
+                                            total = total + mark.point
+                                            # total_weight = total_weight + mark.marks
 
-                            save_data = YearResult(
-                                registration=registration_number,
-                                event=get_event,
-                                point=total
-                                # weight = total_weight
-                            )
-                            save_data.save()
+                                        save_data = YearResult(
+                                            registration=registration_number,
+                                            event=get_event,
+                                            point=total
+                                            # weight = total_weight
+                                        )
+                                        save_data.save()
         messages.success(request,
                          f"Result Uploaded Successfully")
         return redirect('SRS:subject_results_list', rank=get_rank, subject_name=check_subject)

@@ -50,7 +50,7 @@ class YearResult(models.Model):
         return super(YearResult, self).save(*args, **kwargs)
 
     class Meta:
-        # unique_together = ('registration', 'event')
+        unique_together = ('registration', 'event')
         verbose_name = "Academic Year Result"
         verbose_name_plural = "Academic Year Results"
 

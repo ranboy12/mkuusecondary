@@ -55,14 +55,13 @@ def download_csv_data(request, rank, subject):
     # font_style = xlwt.XFStyle()
 
     # get your data, from database or from a text file...
-    data = Registration.objects.filter(rank=get_rank, academic_year =check_event.year).\
-        exclude(id__in=Result.objects.filter(subject__subject__name=subject).values('registration__id'))
+    data = Result.objects.filter(subject__subject__name=subject,registration__rank=get_rank,event=check_event,marks=None)
     for my_row in data:
-        get_name = f"{my_row.student.first_name} {my_row.student.middle_name} {my_row.student.last_name} "
-        get_class = f"{my_row.rank.name}"
+        get_name = f"{my_row.registration.student.first_name} {my_row.registration.student.middle_name} {my_row.registration.student.last_name} "
+        get_class = f"{my_row.registration.rank.name}"
         get_subject = f"{get_subject}"
-        get_reg_number = f"{my_row.student.admission}"
-        get_combination = f"{my_row.combination.name}"
+        get_reg_number = f"{my_row.registration.student.admission}"
+        get_combination = f"{my_row.registration.combination.name}"
         row_num = row_num + 1
         ws.write(row_num, 0, row_num)
         ws.write(row_num, 1, get_reg_number)

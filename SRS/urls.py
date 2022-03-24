@@ -45,6 +45,7 @@ urlpatterns = [
     path('teacher-Subject-list/', views.subject_teacher, name="subject_teacher"),
     path('class-coordinator-list/', views.class_coordinator_list, name="class_coordinator_list"),
     path('subject-result-lists/<rank>/<subject_name>', views.subject_results_list, name="subject_results_list"),
+    path('register-exam/<rank>/<subject>', views.register_exam, name="register_exam"),
     path('student-character-assessment/<rank>/<combination>', views.student_character, name="student_character"),
 
     path('available-Schools-list/', views.available_school, name="available_school"),
