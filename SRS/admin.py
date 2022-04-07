@@ -411,9 +411,9 @@ admin.site.register(School, SchoolAdmin)
 class RegistrationAdmin(ImportExportModelAdmin):
     resource_class = RegistrationResource
     list_display = ('student', 'academic_year', 'rank','combination', 'status', 'is_active', 'created_by')
-    search_fields = ['student', ]
+    search_fields = ['student','rank' ]
 
-    list_filter = ['student']
+    list_filter = ['student','rank']
     #
     # def save_model(self, request, obj, form, change):
     #     obj.created_by = request.user
