@@ -22,7 +22,7 @@ class Student(models.Model):
     phone_regex = RegexValidator(regex=r'[0][6-9][0-9]{8}', message="Phone number must be entered in the format: "
                                                                     "'0.....'. Up to 10 digits allowed.")
     admission = models.CharField(max_length=100, null=False, blank=False, unique=True)
-    entry_number = models.CharField(max_length=100, null=False, blank=False, unique=True)
+    entry_number = models.CharField(max_length=100, null=False, blank=False, unique=False)
 
     first_name = models.CharField(max_length=100, null=False, blank=False)
     middle_name = models.CharField(max_length=100, null=True, blank=False)
