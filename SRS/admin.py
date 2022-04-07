@@ -143,7 +143,7 @@ class StudentAdmin(ImportExportModelAdmin):
         'admission', 'entry_number', 'entry_rank', 'first_name', 'middle_name', 'last_name', 'parent_phone', 'sex',
         'entry_date',)
     search_fields = ['entry_number', 'parent_phone']
-    list_filter = ['sex']
+    list_filter = ['entry_rank']
 
 
     # autocomplete_fields = ['district']
